@@ -71,7 +71,8 @@ async function update(req, res) {
   const client = (
     await connection.query(`SELECT * FROM customers WHERE cpf=$1`, [cpf])
   ).rows;
-  if (client.id !== id && client.length > 0) {
+
+  if (client[0].id !== Number(id) && client.length > 0) {
     res.status(409).send({ message: "This CPF is already being used" });
     return;
   }
