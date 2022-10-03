@@ -5,7 +5,7 @@ async function gameValidation(req, res, next) {
   const { name, categoryId } = req.body;
 
   const category = await connection.query(
-    `SELECT name FROM games WHERE name=$1`,
+    `SELECT name FROM games WHERE unaccent(name) ILIKE unaccent($1)`,
     [name]
   );
   if (category.rows.length > 0) {
@@ -14,7 +14,7 @@ async function gameValidation(req, res, next) {
   }
 
   const idCategory = await connection.query(
-    `SELECT id FROM categories WHERE id=$1`,
+    `SELECT id FROM categories WHERE unaccent(id)= unaccent($1)`,
     [categoryId]
   );
 
