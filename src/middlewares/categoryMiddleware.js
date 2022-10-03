@@ -4,7 +4,7 @@ import { categorySchema } from "../schemas/categorySchema.js";
 async function categoryValidation(req, res, next) {
   const { name } = req.body;
   const category = await connection.query(
-    `SELECT name FROM categories WHERE name=$1`,
+    `SELECT name FROM categories WHERE unaccent(name) ILIKE unaccent($1)`,
     [name]
   );
   if (category.rows.length > 0) {
