@@ -17,7 +17,7 @@ async function gameValidation(req, res, next) {
     `SELECT id FROM categories WHERE id=$1`,
     [categoryId]
   );
-  console.log(idCategory.rows);
+
   if (idCategory.rows.length === 0) {
     res.status(400).send({ message: "Category does not exist" });
     return;
